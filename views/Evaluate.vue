@@ -7,8 +7,8 @@
                 <p>高于周边商家63.8%</p>
             </div>
             <div class="right-div">
-                <p>服务态度 <Rate allow-half v-model="valueHalf1" /></p>
-                <p>服务态度 <Rate allow-half v-model="valueHalf2" /></p>
+                <p>服务态度 <Rate allow-half v-model="valueHalf1" />{{data.serviceScore}}</p>
+                <p>服务态度 <Rate allow-half v-model="valueHalf2" />{{data.rankRate}}</p>
                 <p>送达时间 33分钟</p>
             </div>
         </div>
@@ -28,7 +28,7 @@
                               <span class="username">{{v.username}}</span>
                               <span class="time">{{v.rateTime}}</span>
                           </p>
-                          <p class="howtime">{{v.deliveryTime}}分钟送达</p>
+                          <p class="howtime"><Rate :value.sync="v.score"></Rate>{{v.deliveryTime}}分钟送达</p>
                           <p class="content-text">{{v.text}}</p>
                           <p class="recommend"><Icon type="ios-thumbs-up" />
                             <span v-for="(v) in v.recommend" :key='v.recommend'>{{v}}</span>
@@ -52,12 +52,26 @@ import { getEvaluate } from '../api/apis'
 
             }
         },
-        created(){
-            getEvaluate().then((res)=>{
-                console.log(res.data.data);
-                this.data=res.data.data;
-            })
+  created() {
+    getEvaluate().then(res => {
+      this.data = res.data.data;
+      this.data.forEach(function(v) {
+        //   v.rateTime=new Date(parseInt(v.rateTime) * 1000).toLocaleString().replace(/年|月/g, "/").replace(/日/g, " ");
+        function newtime(sjx) {
+            var sj = new Date(sjx);
+            var year = sj.getFullYear();
+            var month = sj.getMonth() + 1; if (month < 10) { month = '0' + month; }
+            var day = sj.getDate(); if (day < 10) { day = '0' + day; }
+            var hours = sj.getHours(); if (hours < 10) { hours = '0' + hours; }
+            var minutes = sj.getMinutes(); if (minutes < 10) { minutes = '0' + minutes; }
+            var seconds = sj.getSeconds(); if (seconds < 10) { seconds = '0' + seconds; }
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
         }
+        v.rateTime=newtime(v.rateTime);
+      });
+    });
+  }
+    
     }
 </script>
 

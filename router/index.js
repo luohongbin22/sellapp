@@ -7,6 +7,7 @@ export default new VueRouter({
   routes:[ 
         {path:'/',name:'Main',component:Main,
         children:[
+          {path:'/',component:()=> import('../views/Goods.vue')},
           {path:'/goods',name:'goods',component:()=> import('../views/Goods.vue')},
           {path:'/evaluate',name:'evaluate',component:()=> import('../views/Evaluate.vue')},
           {path:'/merchanrt',name:'merchanrt',component:()=> import('../views/Merchanrt.vue')},

@@ -63,14 +63,47 @@ export default {
     new BScroll(document.querySelector(".left-div"),{
         click:true
     });
-    this.rightDiv=new BScroll(document.querySelector(".right-div"));
+    this.rightDiv=new BScroll(document.querySelector(".right-div"),{
+      probeType:3 //实时派发滚动事件
+    });
+    this.rightDiv.on('scroll',(obj)=>{
+        let y=Math.abs(obj.y);
+    
+      // 高频获取（性能优化）
+      for(let objDiv of this.getMath){//调用属性
+          if(y>=objDiv.min && y<objDiv.max){
+
+              // 就把样式加上
+              this.curIndex=objDiv.index;
+              return;
+          }
+      }
+    })
   },
   methods:{
       clickTitle(index){
           this.curIndex=index;
           this.rightDiv.scrollToElement(document.getElementById(index),400)
 }
-  }
+  },
+  computed:{
+      // eslint-disable-next-line vue/return-in-computed-property
+      getMath(){
+        let arr=[]
+        let total=0;//一开始为零
+        // 根据数组索引，获取每一个div的高度
+        for(let i=0;i<this.list.length;i++){
+          var divHeight=document.getElementById(i).offsetHeight //返回元素的高度 
+          // 把拿到的元素高度放到数组存起来
+          arr.push({min:total,max:total+divHeight,index:i});
+
+          total+=divHeight;//循环一次加一次自身高度
+        }
+        console.log(arr);//最终数组
+
+        return arr;
+      }
+  },
 };
 </script>
 

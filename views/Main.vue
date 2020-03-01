@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 <template>
     <div class="main">
         <!-- 主页面 -->
