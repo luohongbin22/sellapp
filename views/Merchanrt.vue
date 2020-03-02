@@ -20,7 +20,7 @@
             </div>
             <!-- 公告 -->
             <div class="notice">
-                <h3>公告与活动</h3>
+                <h2>公告与活动</h2>
                 <p>{{data.bulletin}}</p>
             </div>
             <!-- 特色支持 -->
@@ -31,10 +31,17 @@
             </div>
            <!-- 商家实景 -->
            <div class="scene-div">
-               <img :src="data.pics" alt="" width="100px">
-               <img :src="data.pics[1]" alt="" width="100px">
-               <img :src="data.pics[2]" alt="" width="100px">
-              
+               <h2>商家实景</h2>
+               <div class="images">
+                   <img :src="item" v-for="(item) in data.pics" :key="item.id">
+               </div>
+           </div>
+           <!-- 商家信息 -->
+           <div class="service-info">
+               <h2>商家信息</h2>
+                   <div v-for="item in data.infos" :key="item.id" class="service-div">
+                       <p>{{ item }}</p>
+                   </div>
            </div>
         </div>
     </div>
@@ -59,14 +66,14 @@ import {getSeller} from '../api/apis.js'
 </script>
 
 <style lang="less" scoped>
- html,body{
-      height: 100%;
-    }
+//  html,body{
+//       height: 100%;
+//     }
 .merchanrt-div{
         display: flex;
         height: 100%;
-        border-bottom: 30px solid #F4F5F7;
     .header{
+        flex: 1;
         margin: 16px 14px;
         display: flex;
         border-bottom: 1px solid #ccc;
@@ -85,6 +92,7 @@ import {getSeller} from '../api/apis.js'
         }
     }
     .info{
+        flex: 1;
         display: flex;
         justify-content: space-around;
         padding-bottom:14px; 
@@ -104,8 +112,9 @@ import {getSeller} from '../api/apis.js'
         }
     }
     .notice{
+        flex: 1;
         border-bottom: 1px solid #ccc;
-        h3{
+        h2{
             margin-left: 10px;
         }
         p{
@@ -115,21 +124,45 @@ import {getSeller} from '../api/apis.js'
         }
     }
     .supports-div{
-    //   height: 100%;
+        flex: 1;
+       border-bottom: 30px solid #F4F5F7;
       text-align: left;
       .for-div{
            img{
             vertical-align: middle;
-            margin-right: 10px;
+                margin-right: 10px;
             }
-            p{padding: 20px;}
+            p{padding: 20px;
+            }
       }
      
     }
     // 商家实景
     .scene-div{
-        display: flex;
-        justify-content: space-around;
+        //  height: 100%;
+        flex: 1;
+        border-bottom: 30px solid #F4F5F7;
+        h2{
+            padding: 14px;
+        }
+        .images{
+            margin-left: 7px;
+            img{
+                width:25%;
+                height:25%;
+                padding: 6px;
+            }
+        }
+      
+    }
+    // 商家信息
+    .service-info{
+        height: 40%;
+        margin: 16px;
+        .service-div{
+            border-bottom: 1px solid #ccc;
+            padding: 20px 16px;
+        }
     }
     }
   

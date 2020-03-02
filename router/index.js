@@ -11,7 +11,7 @@ export default new VueRouter({
           {path:'/goods',name:'goods',component:()=> import('../views/Goods.vue')},
           {path:'/evaluate',name:'evaluate',component:()=> import('../views/Evaluate.vue')},
           {path:'/merchanrt',name:'merchanrt',component:()=> import('../views/Merchanrt.vue')},
-          {path:'/merchanrt',name:'merchanrt',component:()=> import('../views/Merchanrt.vue')},
+          {path:'/shopcar',name:'shopcar',component:()=> import('../views/Shopcar.vue')},
         ]},
   
         ]

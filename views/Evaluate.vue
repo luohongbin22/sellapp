@@ -1,5 +1,5 @@
 <template>
-    <div class="evaluate-div">
+    <div class="evaluate">
         <div class="top">
             <div class="left-div">
                 <p style="color:#FE9D09;">3.9</p>
@@ -7,8 +7,8 @@
                 <p>高于周边商家63.8%</p>
             </div>
             <div class="right-div">
-                <p>服务态度 <Rate allow-half v-model="valueHalf1" />{{data.serviceScore}}</p>
-                <p>服务态度 <Rate allow-half v-model="valueHalf2" />{{data.rankRate}}</p>
+                <p>服务态度 <Rate allow-half v-model="valueHalf1" />{{data.score}}</p>
+                <p>服务态度 <Rate allow-half v-model="valueHalf2" />{{data.score}}</p>
                 <p>送达时间 33分钟</p>
             </div>
         </div>
@@ -21,7 +21,8 @@
            <div class="icon-div"><p><Icon type="md-checkmark-circle" />只看有内容的评论</p></div>
             <!-- 内容 -->
            <div class="evaluate-div">
-                  <div v-for="(v,i) in data" :key="i" class="conts">
+             <!-- <ul class="content"> -->
+                 <div v-for="(v,i) in data" :key="i" class="conts">
                       <div class="uesrimg"><img :src="v.avatar" alt=""></div>
                       <div class="txt">
                           <p class="user-time">
@@ -35,6 +36,7 @@
                           </p>
                       </div>
                   </div>
+             <!-- </ul> -->
            </div>
         </div>
     </div>
@@ -42,10 +44,11 @@
 
 <script>
 import { getEvaluate } from '../api/apis'
+// import BScroll from "better-scroll";
     export default {
         data(){
             return{
-                data:{},
+                 data:{},
                  buttonSize: 'large',
                  valueHalf1: 2.5,
                  valueHalf2: 2.5,
@@ -54,6 +57,7 @@ import { getEvaluate } from '../api/apis'
         },
   created() {
     getEvaluate().then(res => {
+      // console.log(res.data.data);
       this.data = res.data.data;
       this.data.forEach(function(v) {
         //   v.rateTime=new Date(parseInt(v.rateTime) * 1000).toLocaleString().replace(/年|月/g, "/").replace(/日/g, " ");
@@ -70,14 +74,20 @@ import { getEvaluate } from '../api/apis'
         v.rateTime=newtime(v.rateTime);
       });
     });
-  }
+  },
+  // mounted(){
+  //   new BScroll(document.querySelector('.evaluate-div'));
+  // }
     
     }
 </script>
 
 <style lang="less" scoped>
-.top{
+.evaluate{
+      height: 100%;
+  .top{
     display: flex;
+    height: 100%;
     border-bottom: 30px solid #F4F5F7;
     .left-div{
         width: 40%;
@@ -127,7 +137,9 @@ import { getEvaluate } from '../api/apis'
     }
     //评价内容
   .evaluate-div{
-      border-top: 1px solid #ccc;
+    height: 100%;
+    overflow: hidden;
+    border-top: 1px solid #ccc;
     .conts {
       display: flex;
       padding-top: 10px;
@@ -189,6 +201,8 @@ import { getEvaluate } from '../api/apis'
   }
 
 }
+}
+
 
 
 </style>

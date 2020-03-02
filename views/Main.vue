@@ -43,17 +43,20 @@
         </div>
         <!-- 二级路由出口 -->
         <router-view></router-view>
-
-        <div class="shopcar-bar">
+        <transition  name="slide-fade">
+          <div v-show="shopcarShow" class="shopcar-board">购物车板子</div>
+        </transition>
+       
+        <div class="shopcar-bar" >
            <div class="shopcar-box1">
-             <img src="../assets/images/car.png">
+             <img src="../assets/images/car.png" @click="shopcarShow = !shopcarShow">
              <span class="price">￥0</span>
              <span class="song">另需配送费￥4元</span>
            </div>
            <div class="shopcar-box2">
              ￥20起送
            </div>
-        </div>
+          </div>
     </div>
 </template>
 
@@ -65,11 +68,12 @@ import {getSeller} from '../api/apis.js'
                 return{
                     // eslint-disable-next-line no-undef
                     data:{},//商家信息
+                    shopcarShow:false,//true显示，false隐藏
                 }
             },
             created(){
                getSeller().then((res)=>{
-                    console.log(res.data.data);
+                    // console.log(res.data.data);
                    this.data=res.data.data;
                 });
               
@@ -239,5 +243,28 @@ import {getSeller} from '../api/apis.js'
     color: rgb(146, 146, 146);
     background: rgb(58, 57, 57);
   }
+}
+.shopcar-board{
+  position: fixed;  
+  height: 200px;
+  width: 100%;
+  bottom: 60px;
+  background-color:thistle;
+}
+
+
+
+/* 可以设置不同的进入和离开动画 */
+/* 设置持续时间和动画函数 */
+.slide-fade-enter-active {
+  transition: all .5s ease;
+}
+.slide-fade-leave-active {
+  transition: all .5s ease;
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateY(300px);
+  opacity: 0;
 }
 </style>
